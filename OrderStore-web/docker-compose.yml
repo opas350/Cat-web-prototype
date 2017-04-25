@@ -1,0 +1,6 @@
+webapp:
+  build: ./src/main/docker/
+  environment:
+    JAVA_OPTS: "-Djava.awt.headless=true"
+  ports:
+    - "8080:8080"

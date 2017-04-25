@@ -1,8 +1,13 @@
 /* The step 1 is create the data dase with the name: test_security*/
 
+DROP SCHEMA IF EXISTS test_security;
+
+CREATE SCHEMA IF NOT EXISTS  test_security;
+USE test_security;
 
 /*All User's gets stored in APP_USER table*/
-create table APP_USER (
+DROP TABLE  IF EXISTS test_security.APP_USER;
+create table  IF NOT EXISTS APP_USER (
    id BIGINT NOT NULL AUTO_INCREMENT,
    sso_id VARCHAR(30) NOT NULL,
    password VARCHAR(100) NOT NULL,
@@ -13,7 +18,8 @@ create table APP_USER (
    UNIQUE (sso_id)
 );
    
-/* USER_PROFILE table contains all possible roles */ 
+/* USER_PROFILE table contains all possible roles */
+DROP TABLE IF EXISTS test_security.USER_PROFILE;
 create table USER_PROFILE(
    id BIGINT NOT NULL AUTO_INCREMENT,
    type VARCHAR(30) NOT NULL,
@@ -21,7 +27,8 @@ create table USER_PROFILE(
    UNIQUE (type)
 );
    
-/* JOIN TABLE for MANY-TO-MANY relationship*/  
+/* JOIN TABLE for MANY-TO-MANY relationship*/
+DROP TABLE IF EXISTS test_security.APP_USER_USER_PROFILE;
 CREATE TABLE APP_USER_USER_PROFILE (
     user_id BIGINT NOT NULL,
     user_profile_id BIGINT NOT NULL,
@@ -48,10 +55,11 @@ VALUES ('demo','$2a$10$4eqIF5s/ewJwHK1p8lqlFOEm2QIA0S8g6./Lok.pQxqcxaBZYChRm', '
   
 /* Populate JOIN Table */
 INSERT INTO APP_USER_USER_PROFILE (user_id, user_profile_id)
-  SELECT user.id, profile.id FROM app_user user, user_profile profile
+  SELECT user.id, profile.id FROM APP_USER user, USER_PROFILE profile
   where user.sso_id='demo' and profile.type='ADMIN';
  
 /* Create persistent_logins Table used to store rememberme related stuff*/
+DROP TABLE IF EXISTS test_security.persistent_logins;
 CREATE TABLE persistent_logins (
     username VARCHAR(64) NOT NULL,
     series VARCHAR(64) NOT NULL,

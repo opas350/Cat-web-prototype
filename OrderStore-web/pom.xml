@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.accenture.orderstore</groupId>
-	<artifactId>OrderStore-web</artifactId>
+	<artifactId>orderstore-web</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>OrderStore-web Maven Webapp</name>
@@ -37,6 +37,7 @@
 		<moment_version>2.14.1</moment_version>
 		<toastr_version>2.1.2</toastr_version>
 
+		<docker.image.prefix>opas350</docker.image.prefix>
 
 	</properties>
 
@@ -266,11 +267,27 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.6</version>
 				<configuration>
-					<warName>OrderStore-web</warName>
+					<warName>orderstore-web</warName>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.11</version>
+				<configuration>
+					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
 		</plugins>
-		<finalName>OrderStore-web</finalName>
+		<finalName>orderstore-web</finalName>
 	</build>
 </project>

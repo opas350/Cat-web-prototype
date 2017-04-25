@@ -1,0 +1,5 @@
+FROM mysql:latest
+COPY /src/main/resources/security_scripts.sql /security_scripts.sql
+COPY /src/main/resources/security_scripts.sql /docker-entrypoint-initdb.d/
+COPY /src/main/resources/security_scripts.sql docker-entrypoint-initdb.d/
+COPY /src/main/resources/security_scripts.sql /docker-entrypoint-initdb.d
