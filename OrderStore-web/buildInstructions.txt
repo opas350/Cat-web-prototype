@@ -1,0 +1,13 @@
+## To build the WebApp
+docker build -t <UserName>/<repoName> .
+
+## To run the WebApp
+docker run -p 8080:8080 -d --name YOUR_NAME_HERE <UserName>/<repoName> .
+
+
+## To build the Database
+docker build --rm -t opas350/mydb -f Dockerfile.sqlapp .
+docker tag IMAGEID <UserName>/<repoName>
+
+## To run the Database
+docker run --name mydb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=demo -t opas350/mysqlapp
